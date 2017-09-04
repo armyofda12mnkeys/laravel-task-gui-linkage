@@ -24,10 +24,9 @@ class BatchProcessController extends Controller
 		$batchprocesses = BatchProcess::all();
 		$data['batchprocesses'] = $batchprocesses;
 		$tasks = Artisan::call('schedule:list');
-		Log::info('Tasks');
-		Log::info($tasks);
-		Log::info(print_r($tasks,1));
-		$data['tasks'] = $tasks;
+		$tasks_output = Artisan::output();
+		//$data['tasks'] = $tasks;
+		$data['tasks_output'] = $tasks_output;
         return view('batchprocess.index', $data);
     }
 

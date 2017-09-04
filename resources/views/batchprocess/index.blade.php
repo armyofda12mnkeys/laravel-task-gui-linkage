@@ -6,7 +6,7 @@
 		</div>
 		@endif
 		<div>
-			List of Batch Processes: 
+			<h3>List of Batch Processes:</h3>
 			<table>
 					<tr>
 						<td>Name</td>
@@ -30,7 +30,9 @@
 					@endforeach
 			</table>
 			<a href="batchprocess/create">Create new Batch Process</a>
-
+			
+			<h3>Current Tasks</h3>
+			<pre>{{$tasks_output}}</pre>
 			<?php
 			/*
 			//dont think i have access to command line output
