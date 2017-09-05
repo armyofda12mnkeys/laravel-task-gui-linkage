@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+//use Illuminate\Console\Command;
 use Log;
+use App\FlareCommand;
 
-class TestTaskJob1 extends Command
+class TestTaskJob1 extends FlareCommand
 {
     /**
      * The name and signature of the console command.

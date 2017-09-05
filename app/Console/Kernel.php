@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
 		foreach ($batch_processes as $batch_process) {
 			// Use the scheduler to add the task at its desired frequency
 			$batchprocess_name = $batch_process->name;
-			//Log::info('Looking at BATCHPROCESS:'. $batchprocess_name);
+			Log::info('Looking at BATCHPROCESS:'. $batchprocess_name);
 			//error_log('Looking at BATCHPROCESS:'. $batchprocess_name);
 			$batchprocess_task = $batch_process->task; //get via dropdown on Batch Process page; which is a Command which is what to run ... something like 'emails:send', 'writeTo:LogFile', 'pushnotification:not-logged-in-users', 'pushnotification:logged-in-but-no-submit-users', etc
 			$batchprocess_timing_to_use = $batch_process->timing_to_use;
@@ -55,17 +55,19 @@ class Kernel extends ConsoleKernel
 			}
 			//Log::info('ADD BATCHPROCESS AS SCHEDULED TASK!!!: '. $batchprocess_task .' '. $batchprocess_params_str);
 			//Log::info($batchprocess_timing_to_use);
+			
 			if($batchprocess_timing_to_use=='cron') {
-				$schedule->command($batchprocess_task .' '. $batchprocess_params_str)
-				->cron($batchprocess_schedule_timing_cron)
-				->before(function(){ Log::info('before command'); error_log('before command'); })
-				->after(function(){ Log::info('after command'); error_log('after command'); });
+				$event = $schedule->command($batchprocess_task .' '. $batchprocess_params_str);
+				$event2 = $event->cron($batchprocess_schedule_timing_cron);
+				$event2->before(function(){ Log::info('before command'); error_log('before command');/*doesn't work since don't have access to $command from scheduler/event: $command->customBefore();*/ });
+				$event2->after(function(){ Log::info('after command'); error_log('after command'); /*doesn't work since don't have access to $command from scheduler/event: $command->customBefore();*/  });
 			} else {
-				$schedule->command($batchprocess_task .' '. $batchprocess_params_str)
-				->$batchprocess_timing_keyword()
-				->before(function(){ Log::info('before command'); error_log('before command'); })
-				->after(function(){ Log::info('after command'); error_log('after command'); });
-			}		
+				$event = $schedule->command($batchprocess_task .' '. $batchprocess_params_str);
+				$event2 = $event->$batchprocess_timing_keyword();
+				$event2->before(function(){ Log::info('before command'); error_log('before command');/*doesn't work since don't have access to $command from scheduler/event: $command->customBefore();*/ });
+				$event2->after(function(){ Log::info('after command'); error_log('after command'); /*doesn't work since don't have access to $command from scheduler/event: $command->customBefore();*/  });
+			}
+			
 		}
 		//*/
 		
