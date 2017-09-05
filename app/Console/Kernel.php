@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
 		foreach ($batch_processes as $batch_process) {
 			// Use the scheduler to add the task at its desired frequency
 			$batchprocess_name = $batch_process->name;
-			//Log::info('Looking at BATCHPROCESS:'. $batchprocess_name);
+			Log::info('Looking at BATCHPROCESS:'. $batchprocess_name);
 			//error_log('Looking at BATCHPROCESS:'. $batchprocess_name);
 			$batchprocess_task = $batch_process->task; //get via dropdown on Batch Process page; which is a Command which is what to run ... something like 'emails:send', 'writeTo:LogFile', 'pushnotification:not-logged-in-users', 'pushnotification:logged-in-but-no-submit-users', etc
 			$batchprocess_timing_to_use = $batch_process->timing_to_use;
@@ -58,13 +58,13 @@ class Kernel extends ConsoleKernel
 			if($batchprocess_timing_to_use=='cron') {
 				$schedule->command($batchprocess_task .' '. $batchprocess_params_str)
 				->cron($batchprocess_schedule_timing_cron)
-				->before(function(){ Log::info('before command'); error_log('before command'); })
-				->after(function(){ Log::info('after command'); error_log('after command'); });
+				->before(function() use ($batchprocess_name,$batchprocess_task,$batchprocess_params,$batchprocess_params_str) { Log::info("before command name=$batchprocess_name, task=$batchprocess_task, params=$batchprocess_params"); error_log('before command'); })
+				->after( function() use ($batchprocess_name,$batchprocess_task,$batchprocess_params,$batchprocess_params_str) { Log::info("after command  name=$batchprocess_name, task=$batchprocess_task, params=$batchprocess_params"); error_log('after command'); });
 			} else {
 				$schedule->command($batchprocess_task .' '. $batchprocess_params_str)
 				->$batchprocess_timing_keyword()
-				->before(function(){ Log::info('before command'); error_log('before command'); })
-				->after(function(){ Log::info('after command'); error_log('after command'); });
+				->before(function() use ($batchprocess_name,$batchprocess_task,$batchprocess_params,$batchprocess_params_str) { Log::info("before command: name=$batchprocess_name, task=$batchprocess_task, params=$batchprocess_params"); error_log('before command'); })
+				->after( function() use ($batchprocess_name,$batchprocess_task,$batchprocess_params,$batchprocess_params_str) { Log::info("after command:  name=$batchprocess_name, task=$batchprocess_task, params=$batchprocess_params"); error_log('after command');  });
 			}		
 		}
 		//*/
