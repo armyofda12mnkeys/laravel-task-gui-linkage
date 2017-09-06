@@ -1,5 +1,6 @@
-<html>
-	<head>
+@extends('layouts.main')
+
+@section('scripts')	
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script>
 		$(function(){
@@ -28,8 +29,9 @@
 			});
 		});
 		</script>
-	</head>
-    <body>
+@endsection
+
+@section('content')	
 		@if ($flash = session('flash_message') )
 		<div class="flash">
 			{{$flash}}
@@ -86,6 +88,4 @@
 			
 			<button type="submit" id="update_btn">UPDATE</button>
 		</form>
-		
-    </body>
-</html>
+@endsection

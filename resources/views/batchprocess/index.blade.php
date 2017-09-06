@@ -1,5 +1,6 @@
-<html>
-    <body>
+@extends('layouts.main')
+
+@section('content')
 		@if ($flash = session('flash_message') )
 		<div class="flash">
 			{{$flash}}
@@ -41,6 +42,3 @@
 			@endforeach
 			*/
 			?>
-		</div>
-    </body>
-</html>

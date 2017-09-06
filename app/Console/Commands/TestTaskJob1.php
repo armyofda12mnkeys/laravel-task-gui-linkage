@@ -38,8 +38,9 @@ class TestTaskJob1 extends Command
      */
     public function handle()
     {
+		$args = $this->arguments();
         $params = $this->options();
-		Log::info('LOG:command: testtaskjob1, params:'.print_r($params,1));
-		error_log('command: testtaskjob1, params:'.print_r($params,1));
+		Log::info('LOG:command: testtaskjob2, params:'.print_r($params,1).'...'.print_r($args,1));
+		error_log('command: testtaskjob1, params:'.print_r($params,1).'...'.print_r($args,1));
     }
 }

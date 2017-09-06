@@ -1,5 +1,6 @@
-<html>
-	<head>
+@extends('layouts.main')
+
+@section('scripts')	
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script>
 		$(function(){
@@ -27,8 +28,9 @@
 			});
 		});
 		</script>
-	</head>
-    <body>
+@endsection
+
+@section('content')	
 		@if ($errors->any())
 			<div class="alert alert-danger">
 				<ul>
@@ -67,6 +69,4 @@
 			
 			<button type="submit" id="create_btn">>Create</button>
 		</form>
-		
-    </body>
-</html>
+@endsection

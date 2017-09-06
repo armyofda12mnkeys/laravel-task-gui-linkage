@@ -12,7 +12,7 @@ class TestTaskJob2 extends Command
      *
      * @var string
      */
-    protected $signature = 'command:testtaskjob2 {--param1=some_default_key} {--param2=This is the default param2} {--param3=foo_bar}';
+    protected $signature = 'command:testtaskjob2 {--param1=some_default_key} {--param2=This is the default param2} {--param3}';
 
     /**
      * The console command description.
@@ -38,8 +38,9 @@ class TestTaskJob2 extends Command
      */
     public function handle()
     {
+		$args = $this->arguments();
         $params = $this->options();
-		Log::info('LOG:command: testtaskjob2, params:'.print_r($params,1));
-		error_log('command: testtaskjob2, params:'.print_r($params,1));
+		Log::info('LOG:command: testtaskjob2, params:'.print_r($params,1).'...'.print_r($args,1));
+		error_log('command: testtaskjob2, params:'.print_r($params,1).'...'.print_r($args,1));
     }
 }
